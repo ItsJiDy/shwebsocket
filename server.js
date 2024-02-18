@@ -14,7 +14,7 @@ Server.on(
                 const Msg = JSON.parse(Message)
                 if (Msg.Name == "Login") {
                     if (Clients[Msg.Value.Name] != undefined) {
-                        Clients[Msg.Value.Name].close()
+                        Clients[Msg.Value.Name].Server.close()
                         Clients[Msg.Value.Name] = undefined
                     }
                     Clients[Msg.Value.Name] = {
