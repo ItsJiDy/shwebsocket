@@ -11,7 +11,7 @@ Server.on(
         Client.on(
             'message',
             (Message) => {
-                const Msg = JSON.parse(message)
+                const Msg = JSON.parse(Message)
                 if (Msg.Name == "Login") {
                     Clients[Msg.Value] = Client
                 } else if (Msg.Name == "AddGlobalChat") {
