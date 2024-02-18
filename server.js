@@ -2,8 +2,8 @@ const WebSocket = require('ws');
 
 const Server = new WebSocket.Server({port:3000})
 
-const Clients = []
-const GlobalChats = []
+var Clients = []
+var GlobalChats = []
 
 Server.on(
     'connection',
@@ -13,24 +13,44 @@ Server.on(
             (Message) => {
                 const Msg = JSON.parse(Message)
                 if (Msg.Name == "Login") {
-                    Clients[Msg.Value] = Client
+                    if (Clients[Msg.Value.Name] != undefined) {
+                        Clients[Msg.Value.Name].close()
+                        Clients[Msg.Value.Name] = undefined
+                    }
+                    Clients[Msg.Value.Name] = {
+                        Server: Client,
+                        JobId: Msg.Value.JobId
+                    }
                 } else if (Msg.Name == "AddGlobalChat") {
                     if (GlobalChats.length > 29) {
                         GlobalChats.splice(0, 1)
                     }
-                    GlobalChats.push(Msg.Value)
+                    GlobalChats.push(Msg.Data)
+                    Client.send(JSON.stringify(GlobalChats))
                 } else if (Msg.Name == "GetGlobalChatData") {
                     Client.send(JSON.stringify(GlobalChats))
                 } else if (Msg.Name == "Send") {
                     if (Msg.Value.Type == "User") {
                         if (Clients[Msg.Value.Name] != undefined) {
-                            Clients[Msg.Value.Name].send(Msg.Value.Data)
+                            Clients[Msg.Value.Name].Server.send(Msg.Value.Data)
                         }
                     } else if (Msg.Value.Type == "Global") {
                         for (const Index in Clients) {
-                            Clients[Index].send(Msg.Value.Data);
+                            if (Msg.Value != Index) {
+                                Clients[Index].Server.send(Msg.Value.Data)
+                            }
                         }
                     }
+                } else if (Msg.Name == "CheckForPlayers") {
+                    const Found = []
+                    for (const Index in Clients) {
+                        if (Msg.Value.Name != Index) {
+                            if (Clients[Index].JobId == Msg.Value.JobId) {
+                                Found.push(Index)
+                            }
+                        }
+                    }
+                    Client.send(JSON.stringify(Found))
                 }
             }
         )
