@@ -18,7 +18,7 @@ Server.on(
                         }
                     )
                     Client.id = Msg.Value
-                if (Msg.Name == "AddGlobalChat") {
+                } else if (Msg.Name == "AddGlobalChat") {
                     Server.clients.forEach(
                         (Item, Index) => {
                             Item.send('{"Name":"' + Msg.Name + '","Data":' + JSON.stringify(Msg.Data) + '}')
