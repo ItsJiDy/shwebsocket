@@ -10,8 +10,8 @@ Server.on(
     (Client) => {
         Client.on(
             'message',
-            (Message, Message2) => {
-                Client.send(Message, Message2)
+            (Message) => {
+                Client.send(Message.Name)
                /* const Msg = JSON.parse(Message)
                 if (Msg.Name == "Login") {
                     if (Clients[Msg.Value.Name] != undefined) {
