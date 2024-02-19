@@ -11,15 +11,24 @@ Server.on(
             (Msg) => {
                 const Message = JSON.parse(Msg)
                 if (Message.Name == "Login") {
+                    Client.id = Message.Value
                     Server.clients.forEach(
                         (Item, Index) => {
                             Item.send("New user arrived " + Message.Value);
                         }
                     )
-                } else if (Message.Name == "Send") {
+                } else if (Message.Name == "SendUser") {
                     Server.clients.forEach(
                         (Item, Index) => {
-                            Item.send(Message.User + ": " + Message.Value);
+                            if (Item.id == Message.To) {
+                                Item.send(Message.From + ": " + Message.Text);
+                            }
+                        }
+                    )
+                } else if (Message.Name == "SendGlobal") {
+                    Server.clients.forEach(
+                        (Item, Index) => {
+                            Item.send(Message.From + ": " + Message.Text);
                         }
                     )
                 }
