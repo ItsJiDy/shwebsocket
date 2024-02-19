@@ -26,7 +26,9 @@ Server.on(
                         GlobalChats.splice(0, 1)
                     }
                     GlobalChats.push(Msg.Data)
-                    Client.send('{"Name":"' + Msg.Name .. + '","Data":' + JSON.stringify(GlobalChats) + '}')
+                    for (const Index in Clients) {
+                        Clients[Index].Server.send('{"Name":"' + Msg.Name .. + '","Data":' + JSON.stringify(GlobalChats) + '}')
+                    }
                 } else if (Msg.Name == "GetGlobalChatData") {
                     Client.send('{"Name":"' + Msg.Name .. + '","Data":' + JSON.stringify(GlobalChats) + '}')
                 } else if (Msg.Name == "Send") {
@@ -56,5 +58,4 @@ Server.on(
         )
     }
 )
-
 
