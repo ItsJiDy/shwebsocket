@@ -11,8 +11,7 @@ Server.on(
         Client.on(
             'message',
             (Message) => {
-                Client.send(Message.Name)
-               /* const Msg = JSON.parse(Message)
+                const Msg = JSON.parse(Message)
                 if (Msg.Name == "Login") {
                     if (Clients[Msg.Value.Name] != undefined) {
                         Clients[Msg.Value.Name].Server.close()
@@ -52,9 +51,10 @@ Server.on(
                         }
                     }
                     Client.send('{"Name":"' + Msg.Name .. + '","Data":' + JSON.stringify(Found) + '}')
-                } */
+                }
             }
         )
     }
 )
+
 
