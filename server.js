@@ -2,9 +2,6 @@ const WebSocket = require('ws');
 
 const Server = new WebSocket.Server({port:3000})
 
-var Clients = []
-var GlobalChats = []
-
 Server.on(
     'connection',
     (Client) => {
@@ -13,45 +10,41 @@ Server.on(
             (Message) => {
                 const Msg = JSON.parse(Message)
                 if (Msg.Name == "Login") {
-                    if (Clients[Msg.Value.Name] != undefined) {
-                        Clients[Msg.Value.Name].Server.close()
-                        Clients[Msg.Value.Name] = undefined
-                    }
-                    Clients[Msg.Value.Name] = {
-                        Server: Client,
-                        JobId: Msg.Value.JobId
-                    }
-                } else if (Msg.Name == "AddGlobalChat") {
-                    if (GlobalChats.length > 29) {
-                        GlobalChats.splice(0, 1)
-                    }
-                    GlobalChats.push(Msg.Data)
-                    for (const Index in Clients) {
-                        Clients[Index].Server.send('{"Name":"' + Msg.Name + '","Data":' + JSON.stringify(GlobalChats) + '}')
-                    }
-                } else if (Msg.Name == "GetGlobalChatData") {
-                    Client.send('{"Name":"' + Msg.Name + '","Data":' + JSON.stringify(GlobalChats) + '}')
-                } else if (Msg.Name == "Send") {
-                    if (Msg.Value.Type == "User") {
-                        if (Clients[Msg.Value.Name] != undefined) {
-                            Client.send('{"Name":"' + Msg.Name + '","Sender":"' + Msg.Sender + '","Text":"' + Msg.Text + '","Data":' + JSON.stringify(Msg.Value.Data) + '}')
-                        }
-                    } else if (Msg.Value.Type == "Global") {
-                        for (const Index in Clients) {
-                            if (Msg.Sender != Index) {
-                                Client.send('{"Name":"' + Msg.Name + '","Sender":"' + Msg.Sender + '","Text":"' + Msg.Text + '","Data":' + JSON.stringify(Msg.Value.Data) + '}')
+                    Server.clients.forEach(
+                        (Item, Index) => {
+                            if (Item.id == Msg.Value) {
+                                Item.close()
                             }
                         }
-                    }
-                } else if (Msg.Name == "CheckForPlayers") {
+                    )
+                    Client.id = Msg.Value
+                if (Msg.Name == "AddGlobalChat") {
+                    Server.clients.forEach(
+                        (Item, Index) => {
+                            Item.send('{"Name":"' + Msg.Name + '","Data":' + JSON.stringify(Msg.Data) + '}')
+                        }
+                    )
+                } else if (Msg.Name == "SendUser") {
+                    Server.clients.forEach(
+                        (Item, Index) => {
+                            if (Item.id == Msg.To) {
+                                Item.send('{"Name":"FromUser","From":"' + Client.id + '","Title":"' + Msg.Title + '","Text":"' + Msg.Text + '"}')
+                            }
+                        }
+                    )
+                } else if (Msg.Name == "SendGlobal") {
+                    Server.clients.forEach(
+                        (Item, Index) => {
+                            Item.send('{"Name":"FromUser","From":"' + Client.id + '","Title":"' + Msg.Title + '","Text":"' + Msg.Text + '"}')
+                        }
+                    )
+                } else if (Msg.Name == "GetAllPlayers") {
                     const Found = []
-                    for (const Index in Clients) {
-                        if (Msg.Value.Name != Index) {
-                            if (Clients[Index].JobId == Msg.Value.JobId) {
-                                Found.push(Index)
-                            }
+                    Server.clients.forEach(
+                        (Item, Index) => {
+                            Found.push(Item.id)
                         }
-                    }
+                    )
                     Client.send('{"Name":"' + Msg.Name + '","Data":' + JSON.stringify(Found) + '}')
                 }
             }
