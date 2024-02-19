@@ -27,10 +27,10 @@ Server.on(
                     }
                     GlobalChats.push(Msg.Data)
                     for (const Index in Clients) {
-                        Clients[Index].Server.send('{"Name":"' + Msg.Name .. + '","Data":' + JSON.stringify(GlobalChats) + '}')
+                        Clients[Index].Server.send('{"Name":"' + Msg.Name + '","Data":' + JSON.stringify(GlobalChats) + '}')
                     }
                 } else if (Msg.Name == "GetGlobalChatData") {
-                    Client.send('{"Name":"' + Msg.Name .. + '","Data":' + JSON.stringify(GlobalChats) + '}')
+                    Client.send('{"Name":"' + Msg.Name + '","Data":' + JSON.stringify(GlobalChats) + '}')
                 } else if (Msg.Name == "Send") {
                     if (Msg.Value.Type == "User") {
                         if (Clients[Msg.Value.Name] != undefined) {
