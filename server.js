@@ -34,12 +34,12 @@ Server.on(
                 } else if (Msg.Name == "Send") {
                     if (Msg.Value.Type == "User") {
                         if (Clients[Msg.Value.Name] != undefined) {
-                            Client.send('{"Name":"' + Msg.Name .. + '","Sender":"' + Msg.Sender + '","Text":"' + Msg.Text + '","Data":' + JSON.stringify(Msg.Value.Data) + '}')
+                            Client.send('{"Name":"' + Msg.Name + '","Sender":"' + Msg.Sender + '","Text":"' + Msg.Text + '","Data":' + JSON.stringify(Msg.Value.Data) + '}')
                         }
                     } else if (Msg.Value.Type == "Global") {
                         for (const Index in Clients) {
                             if (Msg.Sender != Index) {
-                                Client.send('{"Name":"' + Msg.Name .. + '","Sender":"' + Msg.Sender + '","Text":"' + Msg.Text + '","Data":' + JSON.stringify(Msg.Value.Data) + '}')
+                                Client.send('{"Name":"' + Msg.Name + '","Sender":"' + Msg.Sender + '","Text":"' + Msg.Text + '","Data":' + JSON.stringify(Msg.Value.Data) + '}')
                             }
                         }
                     }
@@ -52,7 +52,7 @@ Server.on(
                             }
                         }
                     }
-                    Client.send('{"Name":"' + Msg.Name .. + '","Data":' + JSON.stringify(Found) + '}')
+                    Client.send('{"Name":"' + Msg.Name + '","Data":' + JSON.stringify(Found) + '}')
                 }
             }
         )
