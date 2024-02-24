@@ -13,7 +13,7 @@ const ServerStatus = "Online"
 App.get(
     '/script/shutdown/status',
     (Request, Response) => {
-        if (Request.headers.Authorization == 'Elf and Tears') {
+        if (Request.headers.authorization == 'Elf and Tears') {
             Response.send('{"status":"' + ServerStatus + '","code":"200","message":"OK"}');
         } else {
             Response.send('{"code":"403","message":"Unauthorized."}');
@@ -24,7 +24,7 @@ App.get(
 App.post(
     '/script/shutdown/set/:Item',
     (Request, Response) => {
-        if (Request.headers.Authorization == 'Elf and Tears') {
+        if (Request.headers.authorization == 'Elf and Tears') {
             if (Request.params.Item == 'Online' || Request.params.Item == 'Offline') {
                 ServerStatus = Request.params.Item
                 Response.send('{"code":"200","message":"OK"}');
