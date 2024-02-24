@@ -1,5 +1,5 @@
 {
-  "name": "websockets-socket.io",
+  "name": "symphonyhub",
   "version": "1.0.0",
   "engines": {
     "node": "12.x"
@@ -11,7 +11,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "",
   "dependencies": {
     "express": "^4.17.1",
     "ws": "^2.3.0"
