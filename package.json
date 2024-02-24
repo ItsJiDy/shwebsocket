@@ -1,24 +1,19 @@
 {
-  "name": "symphonyhub",
+  "name": "back_end_netly",
   "version": "1.0.0",
-  "engines": {
-    "node": "18.x"
-  },
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "export": "next export"
-  },
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node server.js"
+    "build": "netlify deploy --prod"
   },
   "keywords": [],
   "author": "",
-  "license": "",
+  "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "ws": "^2.3.0"
+    "netlify-cli": "^12.7.2",
+    "ws": "^2.3.0",
+    "netlify-lambda": "^2.0.15",
+    "serverless-http": "^2.7.0"
   }
 }
