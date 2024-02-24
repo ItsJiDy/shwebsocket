@@ -2,7 +2,7 @@
   "name": "symphonyhub",
   "version": "1.0.0",
   "engines": {
-    "node": "12.x"
+    "node": "18.x"
   },
   "build": {
     "dev": "next dev",
