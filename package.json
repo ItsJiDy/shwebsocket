@@ -5,6 +5,9 @@
   "main": "index.js",
   "keywords": [],
   "author": "",
+  "scripts": {
+      "start": "node index.js"
+  },
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
