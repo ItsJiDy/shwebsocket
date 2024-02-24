@@ -4,6 +4,11 @@
   "engines": {
     "node": "12.x"
   },
+  "build": {
+    "dev": "next dev",
+    "build": "next build",
+    "export": "next export"
+  },
   "description": "",
   "main": "server.js",
   "scripts": {
