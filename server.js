@@ -8,7 +8,7 @@ const Server = new WebSocket.Server({
     server: HttpServer
 });
 const GlobalChat = []
-const ServerStatus = "Online"
+var ServerStatus = "Online"
 
 App.get(
     '/script/shutdown/status',
