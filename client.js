@@ -1,38 +1,81 @@
-const WebSocket = require('ws');
+const Express = require('express');
+const Http = require('http');
+const Https = require('https');
 
-const Server = new WebSocket.Server({port:3000})
+const App = Express();
+const HttpServer = Http.createServer(App);
 
-Server.on(
-    'connection',
-    (Client) => {
-        Client.send("New Client Connects.")
-        Client.on(
-            'message',
-            (Msg) => {
-                const Message = JSON.parse(Msg)
-                if (Message.Name == "Login") {
-                    Client.id = Message.Value
-                    Server.clients.forEach(
-                        (Item, Index) => {
-                            Item.send("New user arrived " + Message.Value);
-                        }
-                    )
-                } else if (Message.Name == "SendUser") {
-                    Server.clients.forEach(
-                        (Item, Index) => {
-                            if (Item.id == Message.To) {
-                                Item.send(Message.From + ": " + Message.Text);
-                            }
-                        }
-                    )
-                } else if (Message.Name == "SendGlobal") {
-                    Server.clients.forEach(
-                        (Item, Index) => {
-                            Item.send(Message.From + ": " + Message.Text);
-                        }
-                    )
+App.get(
+    "/script/rendertest",
+    (Request, Response) => {
+        Response.send("I'm Alive!")
+    }
+)
+
+App.post(
+    '/script/getchangelogs',
+    (Request, Response) => {
+        if (Request.headers.authorization == 'Elf and Tears') {
+            Https.get(
+                'https://raw.githubusercontent.com/ItsJiDy/shwebsocket/main/changelogs.json',
+                (Res) => {
+                    let Data = ''
+                    Res.on(
+                        'data',
+                        (Chunk) => {
+            	            Data += Chunk
+            	        }
+            	    )
+            	    Res.on(
+            	        'end',
+            	        () => {
+            	            Response.send(Data)
+            	        }
+            	    )
                 }
-            }
-        )
+            )
+        } else {
+            Response.send('{"code":"403","message":"Unauthorized."}');
+        }
+    }
+)
+
+App.post(
+    '/script/checkpremium/:userid',
+    (Request, Response) => {
+        if (Request.headers.authorization == 'Elf and Tears') {
+            Https.get(
+                'https://inventory.roblox.com/v1/users/' + Request.params.userid + '/items/GamePass/22739804',
+                (Res) => {
+                    let Data = ''
+                    Res.on(
+                        'data',
+                        (Chunk) => {
+            	            Data += Chunk
+            	        }
+            	    )
+            	    Res.on(
+            	        'end',
+            	        () => {
+            	            Data = JSON.parse(Data)
+            	            if (Data.data.length > 0) {
+            	                Response.send('{"code":"201","IsPremium":true}')
+            	            } else {
+            	                Response.send('{"code":"201","IsPremium":false}')
+            	            }
+            	        }
+            	    )
+                }
+            )
+        } else {
+            Response.send('{"code":"403","message":"Unauthorized."}');
+        }
+    }
+)
+
+HttpServer.listen(
+    3000,
+    () => {
+        console.log('Server listening on port 3000');
     }
 )
