@@ -1,89 +1,39 @@
 const Express = require('express');
 const Http = require('http');
-const WebSocket = require('ws');
+const Https = require('https');
 
 const App = Express();
 const HttpServer = Http.createServer(App);
-const Server = new WebSocket.Server({
-    server: HttpServer
-});
-const GlobalChat = []
-var ServerStatus = "Online"
-
-function makeid(length) {
-    let result = '';
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    const charactersLength = characters.length;
-    let counter = 0;
-    while (counter < length) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-      counter += 1;
-    }
-    return result;
-}
 
 App.get(
-    '/spotify/generate_token/:basicToken',
+    "/script/rendertest",
     (Request, Response) => {
-        async function generate(token) {
-            const response = await fetch(`https://accounts.spotify.com/api/token?grant_type=client_credentials`, {
-                method: 'POST',
-                headers: {
-                  'Authorization': 'Basic ' + token,
-                  'Content-Type': 'application/x-www-form-urlencoded'
-                }
-            });
-            const data = await response.text();
-            Response.send(data);
-        }
-        generate(Request.params.basicToken)
+        Response.send("I'm Alive!")
     }
 )
 
-App.get(
-    '/isalive',
-    (Request, Response) => {
-        Response.send("Yes alive!")
-    }
-)
-
-App.get(
-    '/spotify/searchTracks/:access_token/:query',
-    (Request, Response) => {
-        async function searchTracks(query, access_token) {
-            const response = await fetch(`https://api.spotify.com/v1/search?type=track&q=${query}`, {
-                headers: {
-                  'Authorization': 'Bearer ' + access_token
-                }
-            });
-            const data = await response.text();
-            Response.send(data);
-        }
-        searchTracks(Request.params.query, Request.params.access_token);
-    }
-)
-
-App.get(
-    '/spotify/callback',
-    (Request, Response) => {
-        Response.send(Request.query.access_token)
-    }
-)
-
-App.get(
-    '/spotify/login',
-    (Request, Response) => {
-        var scope = 'user-read-private user-read-email playlist-read-private';
-
-        Response.redirect('https://accounts.spotify.com/authorize?response_type=token&client_id=de1fcde34f21465091a7cda4b756ad8e&scope=' + scope + '&redirect_uri=http://localhost:3000/spotify/callback&state=' + makeid(16))
-    }
-)
-
-App.get(
-    '/script/shutdown/status',
+App.post(
+    '/script/getchangelogs',
     (Request, Response) => {
         if (Request.headers.authorization == 'Elf and Tears') {
-            Response.send('{"status":"' + ServerStatus + '","code":"200","message":"OK"}');
+            Https.get(
+                'https://raw.githubusercontent.com/ItsJiDy/shwebsocket/main/changelogs.json',
+                (Res) => {
+                    let Data = ''
+                    Res.on(
+                        'data',
+                        (Chunk) => {
+            	            Data += Chunk
+            	        }
+            	    )
+            	    Res.on(
+            	        'end',
+            	        () => {
+            	            Response.send(Data)
+            	        }
+            	    )
+                }
+            )
         } else {
             Response.send('{"code":"403","message":"Unauthorized."}');
         }
@@ -91,91 +41,34 @@ App.get(
 )
 
 App.post(
-    '/script/shutdown/set/:Item',
+    '/script/checkpremium/:userid',
     (Request, Response) => {
         if (Request.headers.authorization == 'Elf and Tears') {
-            if (Request.params.Item == 'Online' || Request.params.Item == 'Offline') {
-                ServerStatus = Request.params.Item
-                Response.send('{"code":"200","message":"OK"}');
-            } else {
-                Response.send('{"code":"401","message":"Status can be only set as Online or Offline."}');
-            }
-        } else {
-            Response.send('{"code":"403","message":"Unauthorized."}');
-        }
-    }
-)
-
-Server.on(
-    'connection',
-    (Client, Request) => {
-        if (Request.url == '/script/websocketserver') {
-            Client.on(
-                'message',
-                (Message) => {
-                    const Msg = JSON.parse(Message)
-                    if (Msg.Name == "Login") {
-                        Server.clients.forEach(
-                            (Item, Index) => {
-                                if (Item.id == Msg.Value && Item.readyState != 3) {
-                                    Item.close()
-                                }
-                            }
-                        )
-                        Client.id = Msg.Value
-                    } else if (Msg.Name == "AddGlobalChat") {
-                        if (GlobalChat.length == 30) {
-                            GlobalChat.splice(0, 1)
-                        }
-                        GlobalChat.push(Msg.Data)
-                        Server.clients.forEach(
-                            (Item, Index) => {
-                                if (Item.readyState != 3) {
-                                    Item.send('{"Name":"' + Msg.Name + '","Data":' + JSON.stringify(Msg.Data) + '}')
-                                }
-                            }
-                        )
-                    } else if (Msg.Name == "GetGlobalChatData") {
-                        Client.send('{"Name":"' + Msg.Name + '","Data":' + JSON.stringify(GlobalChat) + '}')
-                    } else if (Msg.Name == "SendUser") {
-                        Server.clients.forEach(
-                            (Item, Index) => {
-                                if (Item.id == Msg.To && Item.readyState != 3) {
-                                    Item.send('{"Name":"FromUser","From":"' + Client.id + '","Title":"' + Msg.Title + '","Text":"' + Msg.Text + '"}')
-                                }
-                            }
-                        )
-                    } else if (Msg.Name == "SendGlobal") {
-                        Server.clients.forEach(
-                            (Item, Index) => {
-                                if (Item.readyState != 3) {
-                                    Item.send('{"Name":"FromUser","From":"' + Client.id + '","Title":"' + Msg.Title + '","Text":"' + Msg.Text + '"}')
-                                }
-                            }
-                        )
-                    } else if (Msg.Name == "Announcement") {
-                        Server.clients.forEach(
-                            (Item, Index) => {
-                                if (Item.readyState != 3) {
-                                    Item.send('{"Name":"' + Msg.Name + '","Text":"' + Msg.Text + '"}')
-                                }
-                            }
-                        )
-                    } else if (Msg.Name == "GetAllPlayers") {
-                        const Found = []
-                        Server.clients.forEach(
-                            (Item, Index) => {
-                                if (Item.readyState != 3) {
-                                    Found.push(Item.id)
-                                }
-                            }
-                        )
-                        Client.send('{"Name":"' + Msg.Name + '","Data":' + JSON.stringify(Found) + '}')
-                    }
+            Https.get(
+                'https://inventory.roblox.com/v1/users/' + Request.params.userid + '/items/GamePass/22739804',
+                (Res) => {
+                    let Data = ''
+                    Res.on(
+                        'data',
+                        (Chunk) => {
+            	            Data += Chunk
+            	        }
+            	    )
+            	    Res.on(
+            	        'end',
+            	        () => {
+            	            Data = JSON.parse(Data)
+            	            if (Data.data.length > 0) {
+            	                Response.send('{"code":"201","IsPremium":true}')
+            	            } else {
+            	                Response.send('{"code":"201","IsPremium":false}')
+            	            }
+            	        }
+            	    )
                 }
             )
         } else {
-            Client.terminate()
+            Response.send('{"code":"403","message":"Unauthorized."}');
         }
     }
 )
