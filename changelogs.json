@@ -2,15 +2,15 @@
     {
         "version": "0.1",
         "description": {
-            "Murder Mystery 2": {
+            "Murder Mystery 2": [
                 "New UI"
-            },
-            "Blade Ball": {
+            ],
+            "Blade Ball": [
                 "New UI"
-            },
-            "Prison Life": {
+            ],
+            "Prison Life": [
                 "New UI"
-            }
+            ]
         }
     }
 ]
