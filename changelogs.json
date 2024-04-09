@@ -3,13 +3,16 @@
         "version": "0.1",
         "description": {
             "Murder Mystery 2": [
-                "New UI"
+                "New UI",
+                "Added Click SFX"
             ],
             "Blade Ball": [
-                "New UI"
+                "New UI",
+                "Added Click SFX"
             ],
             "Prison Life": [
-                "New UI"
+                "New UI",
+                "Added Click SFX"
             ]
         }
     }
