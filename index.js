@@ -41,11 +41,11 @@ App.post(
 )
 
 App.post(
-    '/script/checkpremium/:userid',
+    '/script/checkpass/:userid/:pass',
     (Request, Response) => {
         if (Request.headers.authorization == 'Elf and Tears') {
             Https.get(
-                'https://inventory.roblox.com/v1/users/' + Request.params.userid + '/items/GamePass/22739804',
+                'https://inventory.roblox.com/v1/users/' + Request.params.userid + '/items/GamePass/' + Request.params.pass,
                 (Res) => {
                     let Data = ''
                     Res.on(
@@ -59,9 +59,9 @@ App.post(
             	        () => {
             	            Data = JSON.parse(Data)
             	            if (Data.data.length > 0) {
-            	                Response.send('{"code":"201","IsPremium":true}')
+            	                Response.send('{"code":"201","owned":true}')
             	            } else {
-            	                Response.send('{"code":"201","IsPremium":false}')
+            	                Response.send('{"code":"201","owned":false}')
             	            }
             	        }
             	    )
