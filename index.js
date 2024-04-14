@@ -15,7 +15,7 @@ App.get(
 App.post(
     '/script/getchangelogs',
     (Request, Response) => {
-        if (Request.headers.authorization == 'Elf and Tears') {
+        if (Request.headers.authorization == 'elf and tears') {
             Https.get(
                 'https://raw.githubusercontent.com/ItsJiDy/shwebsocket/main/changelogs.json',
                 (Res) => {
@@ -43,7 +43,7 @@ App.post(
 App.post(
     '/script/checkpass/:userid/:pass',
     (Request, Response) => {
-        if (Request.headers.authorization == 'Elf and Tears') {
+        if (Request.headers.authorization == 'elf and tears') {
             Https.get(
                 'https://inventory.roblox.com/v1/users/' + Request.params.userid + '/items/GamePass/' + Request.params.pass,
                 (Res) => {
