@@ -1,14 +1,5 @@
 [
     {
-        "version": "0.1",
-        "description": {
-            "Murder Mystery 2": [
-                "New UI",
-                "Added Click SFX"
-            ]
-        }
-    },
-    {
         "version": "0.2",
         "description": {
             "Murder Mystery 2": [
@@ -27,6 +18,15 @@
                 "Added Join Marines Team",
                 "Added Auto Upgrade Stats",
                 "Added Teleport (First Sea, Second Sea, Third Sea)"
+            ]
+        }
+    },
+    {
+        "version": "0.1",
+        "description": {
+            "Murder Mystery 2": [
+                "New UI",
+                "Added Click SFX"
             ]
         }
     }
