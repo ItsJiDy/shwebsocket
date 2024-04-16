@@ -5,16 +5,28 @@
             "Murder Mystery 2": [
                 "New UI",
                 "Added Click SFX"
+            ]
+        }
+    },
+    {
+        "version": "0.2",
+        "description": {
+            "Murder Mystery 2": [
+                "Updated Infinite Spray Size (Premium)",
+                "Updated Silent Aim",
             ],
-            "Blade Ball": [
-                "Soon",
-                "New UI",
-                "Added Click SFX"
-            ],
-            "Prison Life": [
-                "Soon",
-                "New UI",
-                "Added Click SFX"
+            "Blox Fruits": [
+                "Early Access",
+                "Added Anti AFK (Premium)",
+                "Added PVP Aimbot (Premium)",
+                "Added Auto Farm Quests",
+                "Added Auto Farm Chests",
+                "Added Auto Farm Bones (Third Sea)",
+                "Added Redeem All Valid Codes",
+                "Added Join Pirates Team",
+                "Added Join Marines Team",
+                "Added Auto Upgrade Stats",
+                "Added Teleport (First Sea, Second Sea, Third Sea)",
             ]
         }
     }
