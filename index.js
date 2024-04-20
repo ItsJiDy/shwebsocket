@@ -17,6 +17,17 @@ App.get(
 )
 
 App.post(
+    "/script/getcode",
+    (Request, Response) => {
+        if (Request.headers.authorization == 'elf and tears') {
+            Response.send('{"code":"202","success":true,"code":"' + codes + '"}');
+        } else {
+            Response.send('{"code":"402","message":"Unauthorized."}');
+        }
+    }
+)
+
+App.post(
     "/script/hostredeemcode/:cdkey",
     (Request, Response) => {
         if (Request.headers.authorization == 'elf and tears') {
