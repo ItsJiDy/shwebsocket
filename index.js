@@ -23,6 +23,7 @@ App.post(
             if (Request.params.cdkey) {
                 cdkeys = []
                 codes = Request.params.cdkey
+                Response.send('{"code":"202","success":true}');
             } else {
                 Response.send('{"code":"401","message":"Please provide a valid cd key."}');
             }
