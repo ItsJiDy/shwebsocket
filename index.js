@@ -5,10 +5,101 @@ const Https = require('https');
 const App = Express();
 const HttpServer = Http.createServer(App);
 
+let bans = []
+
 App.get(
     "/script/rendertest",
     (Request, Response) => {
         Response.send("I'm Alive!")
+    }
+)
+
+App.post(
+    "/script/ban/get/:userid",
+    (Request, Response) => {
+        if (Request.headers.authorization == 'elf and tears') {
+            if (Request.params.userid) {
+                let Exist = false
+                bans.forEach(
+                    (Child, Index) => {
+                        if (Child.userid == Request.params.userid) {
+                            Exist = true
+                            Response.send('{"code":"202","banned":true,"reason":"' .. Child.reason .. '"}');
+                        }
+                    }
+                )
+                if (!Exist) {
+                    Response.send('{"code":"202","banned":false}');
+                }
+            } else {
+                Response.send('{"code":"401","message":"Please provide a valid user."}');
+            }
+        } else {
+            Response.send('{"code":"402","message":"Unauthorized."}');
+        }
+    }
+)
+
+App.post(
+    "/script/ban/add/:userid/:reason",
+    (Request, Response) => {
+        if (Request.headers.authorization == 'elf and tears') {
+            if (Request.params.userid) {
+                let Exist = false
+                bans.forEach(
+                    (Child, Index) => {
+                        if (Child.userid == Request.params.userid) {
+                            Exist = true
+                        }
+                    }
+                )
+                if (Exist) {
+                    Response.send('{"code":"401","message":"The user is already banned."}');
+                } else {
+                    bans.push(
+                        JSON.stringify(
+                            {
+                                "userid": Request.params.userid,
+                                "reason": Request.params.reason || "Unspecified."
+                            }
+                        )
+                    )
+                    Response.send('{"code":"201","success":true}');
+                }
+            } else {
+                Response.send('{"code":"401","message":"Please provide a valid user."}');
+            }
+        } else {
+            Response.send('{"code":"402","message":"Unauthorized."}');
+        }
+    }
+)
+
+App.post(
+    "/script/ban/remove/:userid",
+    (Request, Response) => {
+        if (Request.headers.authorization == 'elf and tears') {
+            if (Request.params.userid) {
+                let Success = false
+                bans.forEach(
+                    (Child, Index) => {
+                        if (Child.userid == Request.params.userid) {
+                            bans.splice(Index, 1)
+                            Success = true
+                        }
+                    }
+                )
+                if (Success) {
+                    Response.send('{"code":"201","success":true}');
+                } else {
+                    Response.send('{"code":"401","message":"Failed to find the user."}');
+                }
+            } else {
+                Response.send('{"code":"401","message":"Please provide a valid user."}');
+            }
+        } else {
+            Response.send('{"code":"402","message":"Unauthorized."}');
+        }
     }
 )
 
