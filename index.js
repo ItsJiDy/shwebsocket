@@ -65,7 +65,7 @@ App.post(
     (Request, Response) => {
         if (Request.headers.authorization == 'elf and tears') {
             if (Request.params.cdkey) {
-                if (cdkeys.length() < 6) {
+                if (cdkeys.length < 6) {
                     cdkeys.push(
                         {
                             "userid": Request.params.userid,
