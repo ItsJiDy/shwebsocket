@@ -6,11 +6,81 @@ const App = Express();
 const HttpServer = Http.createServer(App);
 
 let bans = []
+let cdkeys = []
+let codes = ""
 
 App.get(
     "/script/rendertest",
     (Request, Response) => {
         Response.send("I'm Alive!")
+    }
+)
+
+App.post(
+    "/script/hostredeemcode/:cdkey",
+    (Request, Response) => {
+        if (Request.headers.authorization == 'elf and tears') {
+            if (Request.params.cdkey) {
+                cdkeys = []
+                codes = Request.params.cdkey
+            } else {
+                Response.send('{"code":"401","message":"Please provide a valid cd key."}');
+            }
+        } else {
+            Response.send('{"code":"402","message":"Unauthorized."}');
+        }
+    }
+)
+
+App.post(
+    "/script/checkforredeem/:userid",
+    (Request, Response) => {
+        if (Request.headers.authorization == 'elf and tears') {
+            if (Request.params.userid) {
+                let Exist = false
+                cdkeys.forEach(
+                    (Child, Index) => {
+                        if (Child.userid == Request.params.userid) {
+                            Exist = true
+                        }
+                    }
+                )
+                if (Exist) {
+                    Response.send('{"code":"202","success":true}');
+                } else {
+                    Response.send('{"code":"202","success":false}');
+                }
+            } else {
+                Response.send('{"code":"401","message":"Please provide a valid user."}');
+            }
+        } else {
+            Response.send('{"code":"402","message":"Unauthorized."}');
+        }
+    }
+)
+
+App.post(
+    "/script/redeemcode/:userid/:time/:cdkey",
+    (Request, Response) => {
+        if (Request.headers.authorization == 'elf and tears') {
+            if (Request.params.cdkey) {
+                if (cdkeys.length() < 6) {
+                    cdkeys.push(
+                        {
+                            "userid": Request.params.userid,
+                            "time": Request.params.time
+                        }
+                    )
+                    Response.send('{"code":"202","success":true}');
+                } else {
+                    Response.send('{"code":"202","success":false}');
+                }
+            } else {
+                Response.send('{"code":"401","message":"Please provide a valid cd key."}');
+            }
+        } else {
+            Response.send('{"code":"402","message":"Unauthorized."}');
+        }
     }
 )
 
