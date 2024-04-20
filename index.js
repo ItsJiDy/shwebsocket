@@ -243,7 +243,7 @@ App.post(
             	        'end',
             	        () => {
             	            Data = JSON.parse(Data)
-            	            if (Data.data.length > 0) {
+            	            if (Data.data && Data.data.length > 0) {
             	                Response.send('{"code":"201","owned":true}')
             	            } else {
             	                Response.send('{"code":"201","owned":false}')
