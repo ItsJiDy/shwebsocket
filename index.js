@@ -39,15 +39,17 @@ App.post(
         if (Request.headers.authorization == 'elf and tears') {
             if (Request.params.userid) {
                 let Exist = false
+                let Response
                 cdkeys.forEach(
                     (Child, Index) => {
                         if (Child.userid == Request.params.userid) {
                             Exist = true
+                            Response = Child.time
                         }
                     }
                 )
                 if (Exist) {
-                    Response.send('{"code":"202","success":true}');
+                    Response.send('{"code":"202","success":true,"time":' + Response + '}');
                 } else {
                     Response.send('{"code":"202","success":false}');
                 }
@@ -75,10 +77,10 @@ App.post(
                         )
                         Response.send('{"code":"202","success":true}');
                     } else {
-                        Response.send('{"code":"202","success":false}');
+                        Response.send('{"code":"202","success":false,"limited":true}');
                     }
                 } else {
-                    Response.send('{"code":"202","success":false}');
+                    Response.send('{"code":"202","success":false,"limited":false}');
                 }
             } else {
                 Response.send('{"code":"401","message":"Please provide a valid cd key."}');
