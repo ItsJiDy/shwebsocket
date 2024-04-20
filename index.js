@@ -65,14 +65,18 @@ App.post(
     (Request, Response) => {
         if (Request.headers.authorization == 'elf and tears') {
             if (Request.params.cdkey) {
-                if (cdkeys.length < 6) {
-                    cdkeys.push(
-                        {
-                            "userid": Request.params.userid,
-                            "time": Request.params.time
-                        }
-                    )
-                    Response.send('{"code":"202","success":true}');
+                if (Request.params.cdkey == codes) {
+                    if (cdkeys.length < 6) {
+                        cdkeys.push(
+                            {
+                                "userid": Request.params.userid,
+                                "time": Request.params.time
+                            }
+                        )
+                        Response.send('{"code":"202","success":true}');
+                    } else {
+                        Response.send('{"code":"202","success":false}');
+                    }
                 } else {
                     Response.send('{"code":"202","success":false}');
                 }
