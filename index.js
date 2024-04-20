@@ -57,12 +57,10 @@ App.post(
                     Response.send('{"code":"401","message":"The user is already banned."}');
                 } else {
                     bans.push(
-                        JSON.stringify(
-                            {
-                                "userid": Request.params.userid,
-                                "reason": Request.params.reason || "Unspecified."
-                            }
-                        )
+                        {
+                            "userid": Request.params.userid,
+                            "reason": Request.params.reason || "Unspecified."
+                        }
                     )
                     Response.send('{"code":"201","success":true}');
                 }
