@@ -24,7 +24,7 @@ App.post(
                     (Child, Index) => {
                         if (Child.userid == Request.params.userid) {
                             Exist = true
-                            Response.send('{"code":"202","banned":true,"reason":"' .. Child.reason .. '"}');
+                            Response.send('{"code":"202","banned":true,"reason":"' + Child.reason + '"}');
                         }
                     }
                 )
