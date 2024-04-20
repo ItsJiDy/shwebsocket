@@ -34,24 +34,32 @@ App.post(
 )
 
 App.post(
-    "/script/checkforredeem/:userid",
+    "/script/checkforredeem/:userid/:cdkey",
     (Request, Response) => {
         if (Request.headers.authorization == 'elf and tears') {
             if (Request.params.userid) {
-                let Exist = false
-                let Res
-                cdkeys.forEach(
-                    (Child, Index) => {
-                        if (Child.userid == Request.params.userid) {
-                            Exist = true
-                            Res = Child.time
+                if (Request.params.cdkey) {
+                    if (Request.params.cdkey == codes) {
+                        let Exist = false
+                        let Res
+                        cdkeys.forEach(
+                            (Child, Index) => {
+                                if (Child.userid == Request.params.userid) {
+                                    Exist = true
+                                    Res = Child.time
+                                }
+                            }
+                        )
+                        if (Exist) {
+                            Response.send('{"code":"202","success":true,"time":' + Res + '}');
+                        } else {
+                            Response.send('{"code":"202","success":false}');
                         }
+                    } else {
+                        Response.send('{"code":"202","success":false}');
                     }
-                )
-                if (Exist) {
-                    Response.send('{"code":"202","success":true,"time":' + Res + '}');
                 } else {
-                    Response.send('{"code":"202","success":false}');
+                    Response.send('{"code":"401","message":"Please provide a valid cd key."}');
                 }
             } else {
                 Response.send('{"code":"401","message":"Please provide a valid user."}');
