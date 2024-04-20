@@ -39,17 +39,17 @@ App.post(
         if (Request.headers.authorization == 'elf and tears') {
             if (Request.params.userid) {
                 let Exist = false
-                let Response
+                let Res
                 cdkeys.forEach(
                     (Child, Index) => {
                         if (Child.userid == Request.params.userid) {
                             Exist = true
-                            Response = Child.time
+                            Res = Child.time
                         }
                     }
                 )
                 if (Exist) {
-                    Response.send('{"code":"202","success":true,"time":' + Response + '}');
+                    Response.send('{"code":"202","success":true,"time":' + Res + '}');
                 } else {
                     Response.send('{"code":"202","success":false}');
                 }
