@@ -7,12 +7,60 @@ const HttpServer = Http.createServer(App);
 
 let bans = []
 let cdkeys = []
+let contentcreators = []
 let codes = ""
 
 App.get(
     "/script/rendertest",
     (Request, Response) => {
         Response.send("I'm Alive!")
+    }
+)
+
+App.post(
+    "/script/contentcreator/:subject/:userid",
+    (Request, Response) => {
+        if (Request.headers.authorization == 'elf and tears') {
+            if (Request.params.userid) {
+                let Exist = false
+                let Res
+                contentcreators.forEach(
+                    (Child, Index) => {
+                        if (Child == Request.params.userid) {
+                            Exist = true
+                            Res = Index
+                        }
+                    }
+                )
+                if (!Exist) {
+                    if (Request.params.subject == "add") {
+                        contentcreators.push(Request.params.userid)
+                        Response.send('{"code":"202","success":true}');
+                    } else if (Request.params.subject == "remove") {
+                        Response.send('{"code":"202","success":false}');
+                    } else if (Request.params.subject == "get") {
+                        Response.send('{"code":"202","success":false}');
+                    } else {
+                        Response.send('{"code":"202","success":false}');
+                    }
+                } else {
+                    if (Request.params.subject == "add") {
+                        Response.send('{"code":"202","success":false}');
+                    } else if (Request.params.subject == "remove") {
+                        contentcreators.splice(Res, 1)
+                        Response.send('{"code":"202","success":true}');
+                    } else if (Request.params.subject == "get") {
+                        Response.send('{"code":"202","success":true}');
+                    } else {
+                        Response.send('{"code":"202","success":false}');
+                    }
+                }
+            } else {
+                Response.send('{"code":"202","success":false}');
+            }
+        } else {
+            Response.send('{"code":"402","message":"Unauthorized."}');
+        }
     }
 )
 
