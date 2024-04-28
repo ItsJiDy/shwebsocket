@@ -1,5 +1,31 @@
 [
     {
+        "version": "0.4",
+        "description": {
+            "Murder Mystery 2": [
+                "Added Extra",
+                "Updated Trap Aura (Premium)",
+                "Updated Reset Everyone (Premium)",
+                "Updated Reset Murderer (Premium)",
+                "Updated Reset Sheriff (Premium)",
+                "Updated Glitch Everyone (Premium)",
+                "Updated Glitch Murderer (Premium)",
+                "Updated Glitch Sheriff (Premium)",
+                "Updated Yeet Everyone (Premium)",
+                "Updated Yeet Murderer (Premium)",
+                "Updated Yeet Sheriff (Premium)",
+                "Updated Silent Aim",
+                "Updated Auto Farm",
+                "Updated Cham",
+                "Updated Cham Dropped Gun",
+                "Updated Cham Coins",
+                "Updated ESP",
+                "Updated ESP Dropped Gun",
+                "Updated ESP Coins"
+            ]
+        }
+    },
+    {
         "version": "0.3",
         "description": {
             "Murder Mystery 2": [
