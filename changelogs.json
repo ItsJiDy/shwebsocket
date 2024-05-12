@@ -1,5 +1,52 @@
 [
     {
+        "version": "0.6",
+        "description": {
+            "Murder Mystery 2": [
+                "Added Infinite Fireflies (Premium)",
+                "Added No Fireflies Cooldown (Premium)",
+                "Updated Auto Farm",
+                "Updated Knife Aura"
+            ],
+            "Blox Fruits": [
+                "Added Auto Second Sea",
+                "Added Auto Third Sea",
+                "Added Auto Farm Canvander",
+                "Added Auto Haki",
+                "Added Auto Farm Silent Aim",
+                "Added Buy Black Cape",
+                "Added Swordsman Hat",
+                "Added Buy Cutlass",
+                "Added Buy Katana",
+                "Added Buy Iron Mace",
+                "Added Buy Duel Katana",
+                "Added Buy Triple Katana",
+                "Added Buy Pipe",
+                "Added Buy Dual Headed Blade",
+                "Added Buy Bisento",
+                "Added Buy Soul Cane",
+                "Added Buy Slingshot",
+                "Added Buy Musket",
+                "Added Buy Flintlock",
+                "Added Buy Refined Flintlock",
+                "Added Buy Cannon",
+                "Added Buy Kabucha",
+                "Updated Rapid Attack (Premium)",
+                "Updated Auto Farm Quests",
+                "Updated Auto Farm Chests",
+                "Updated Auto Farm Rip Indra",
+                "Updated Auto Farm Factory",
+                "Updated Auto Farm Saber",
+                "Updated Auto Farm Hallow Scythe",
+                "Updated Auto Farm Cake Queen",
+                "Updated Auto Farm Swan Glasses",
+                "Updated Auto Farm Rengoku",
+                "Updated Auto Farm Ectoplasm",
+                "Updated Auto Cast Skills"
+            ]
+        }
+    },
+    {
         "version": "0.5",
         "description": {
             "Murder Mystery 2": [
