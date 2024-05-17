@@ -1,5 +1,52 @@
 [
     {
+        "version": "0.7",
+        "description": {
+            "Murder Mystery 2": [
+                "Added Old Germany Flag Everyone (Premium)",
+                "Added Old Germany Flag Player (Premium)",
+                "Added Old Germany Flag Murderer (Premium)",
+                "Added Old Germany Flag Sheriff (Premium)",
+                "Added Infinite Prank Bomb (Content Creator)",
+                "Added No Prank Bomb Cooldown (Content Creator)",
+                "Added Place Portal Block",
+                "Added Place Nether Portal",
+                "Added Place Aether Portal",
+                "Updated Auto Farm",
+                "Updated Knife Aura",
+                "Updated ESP Everyone"
+            ],
+            "Blade Ball": [
+                "Added Bypass Pulse Ability (Premium)",
+                "Added Auto Titan Blade Mode (Premium)",
+                "Added AI Auto Play (Premium)",
+                "Added Auto Buy Normal Sword Crate",
+                "Added Auto Buy Normal Explosion Crate",
+                "Added Buy Normal Sword Crate",
+                "Added Buy Normal Explosion Crate",
+                "Added ESP Everyone",
+                "Added ESP Box Everyone",
+                "Added Tracer Everyone",
+                "Added Tracer Ball",
+                "Added Auto Parry",
+                "Added Auto Curve Ball",
+                "Added Auto Parry Range Prediction Type",
+                "Added Spam Parry on Clash",
+                "Added Additional Range Ping Based",
+                "Added Auto Parry Hit/s Before Clash",
+                "Added Auto Notify When Parried",
+                "Added Auto Notify On Detected Clash",
+                "Added Auto Flash Counter",
+                "Added Auto Pull/Telekinesis",
+                "Added Auto Raging Deflection/Rapture",
+                "Added Auto Look At Ball",
+                "Added Intense Orbit Ball",
+                "Added Show Sphere Hitbox Aura",
+                "Added Spam Parry"
+            ]
+        }
+    },
+    {
         "version": "0.6",
         "description": {
             "Murder Mystery 2": [
