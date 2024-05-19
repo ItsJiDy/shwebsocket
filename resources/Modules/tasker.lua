@@ -79,7 +79,7 @@ function Module.new()
             if typeof(Child) == "RBXScriptConnection" then
                 Child:Disconnect()
                 self.Tasks[_] = nil
-            elseif typeof(self.Tasks[Name]) == "function" then
+            elseif typeof(Child) == "function" then
                 self.Tasks[_] = nil
             else
                 error("The signal is not a RBXScriptConnection or a function, expected: " .. typeof(Child) .. ".")
